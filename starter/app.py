@@ -1,15 +1,20 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 st.title('Supermarket Data')
 
-@st.cache
-def load_data(nrows):
-    data = pd.read_csv('supermarket.csv', nrows=nrows)
-    return data
+def get_path(csv):
+    return Path('datasets', csv)
 
-data = load_data(896)
+@st.cache
+def get_csv(path):
+    return pd.read_csv(path)
+
+supermarket = get_path('supermarket.csv')
+
+data = get_csv(supermarket)
 
 if st.checkbox('Show Raw Data'):
     st.subheader('Raw Data')
